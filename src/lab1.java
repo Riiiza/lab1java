@@ -218,11 +218,11 @@ public class lab1 extends javax.swing.JFrame {
 //
 //        }
         for(i = lowerBound; i < upperBound; i+=step){
-            if((lowerBound + step) < upperBound) {
-                result += ((1/lowerBound) + (1/(step + lowerBound))) * (step/2);
+            if((i + step) < upperBound) {
+                result += ((1/i) + (1/(step + i))) * (step/2);
             }
             else{
-                result += ((1/lowerBound) + (1/upperBound)) * ((upperBound - lowerBound)/2);
+                result += ((1/i) + (1/upperBound)) * ((upperBound - i)/2);
                 lowerBound = lowerBound + step;
             }
         }
