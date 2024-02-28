@@ -5,6 +5,7 @@
  */
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
 /**
  *
  * @author maxwe
@@ -36,6 +37,8 @@ public class lab1 extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,6 +113,20 @@ public class lab1 extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setText("Заполнить");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Очистить");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,21 +134,28 @@ public class lab1 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                            .addComponent(jTextField3))
-                        .addGap(259, 259, 259)
-                        .addComponent(jButton4))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTextField1)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                                    .addComponent(jTextField3))
+                                .addGap(259, 259, 259)
+                                .addComponent(jButton4)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,7 +174,9 @@ public class lab1 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton6)
+                    .addComponent(jButton5))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -209,14 +235,7 @@ public class lab1 extends javax.swing.JFrame {
         double step = Double.parseDouble(model.getValueAt(row, 2).toString());
         double i = 0;
         double result = 0;
-//        if((lowerBound + step) > upperBound){
-//            for (double x = lowerBound; x < upperBound; x += step) {
-//                result += 1 / x * step;
-//            }
-//        }
-//        else{
-//
-//        }
+
         for(i = lowerBound; i < upperBound; i+=step){
             if((i + step) < upperBound) {
                 result += ((1/i) + (1/(step + i))) * (step/2);
@@ -228,7 +247,69 @@ public class lab1 extends javax.swing.JFrame {
         }
         model.setValueAt(result, row, 3); // Устанавливаем значение результата в четвертый столбец таблицы
     }//GEN-LAST:event_jButton3ActionPerformed
+    
+    public class Chislo{
+        public double lowerBound;
+        public double upperBound;
+        public double step;
+        
+        public Chislo(double lBound, double uBound, double st){
+            this.lowerBound = lBound;
+            this.upperBound = uBound;
+            this.step = st;
+        }
+        
+        public Chislo() {
+        // Конструктор по умолчанию без аргументов
+        }
+        
+        public ArrayList<Chislo> ListChislo() {
+            ArrayList<Chislo> RecIntegral = new ArrayList<Chislo>();
+            Chislo c1 = new Chislo(1.0, 10.0, 0.1); // Явно передаем аргументы при создании объекта Chislo
+            RecIntegral.add(c1);
 
+            return RecIntegral;
+        }
+    }
+    
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int row = 0;
+        Chislo chislo = new Chislo(0, 0, 0); // создаем экземпляр класса Chislo
+        ArrayList<Chislo> RecIntegral = chislo.ListChislo(); // вызываем метод ListChislo() на этом экземпляре
+        for(int i = 0; i < RecIntegral.size(); i++){
+            Object rowData[] = new Object [3]; // создаем новый объект rowData для каждой строки
+            rowData[0] = RecIntegral.get(i).lowerBound;
+            rowData[1] = RecIntegral.get(i).upperBound;
+            rowData[2] = RecIntegral.get(i).step;
+            model.insertRow(0, rowData);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        ArrayList<Chislo> RecIntegral = new Chislo().ListChislo(); // Получаем коллекцию объектов Chislo
+
+        for (Chislo chislo : RecIntegral) {
+            for (int i = 0; i < model.getRowCount(); i++) {
+                double lBound = Double.parseDouble(model.getValueAt(i, 0).toString());
+                double uBound = Double.parseDouble(model.getValueAt(i, 1).toString());
+                double st = Double.parseDouble(model.getValueAt(i, 2).toString());
+
+                // Проверяем соответствие данных из модели таблицы и объекта Chislo
+                if (chislo.lowerBound == lBound && chislo.upperBound == uBound && chislo.step == st) {
+                    model.removeRow(i);
+                    break; // Прерываем цикл после удаления строки
+                }
+                else{
+                    break;
+                }
+            }
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -269,6 +350,8 @@ public class lab1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
